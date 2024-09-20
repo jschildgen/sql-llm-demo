@@ -64,14 +64,32 @@ recognition.onend = function() {
   transcript = recorded_text.join(" ");
   log("Transcript: ", transcript);
   recorded_text = [];
-  use_ai(transcript, PREFIX_PROMPT_QUERY.replace("@@@SCHEMA@@@", $("#schema").text()));
+  use_ai(transcript, PREFIX_PROMPT_QUERY.replace("@@@SCHEMA@@@", $("#schema").text()), 
+    function(json) {
+      if(json.query !== undefined) {
+        if(json.query == null) {
+          log("Query: ", "null", "error");
+          return;
+        }
+        log("Query: ", json.query, "code");
+        use_ai(json.query, PREFIX_PROMPT_CORRECT.replace("@@@SCHEMA@@@", $("#schema").text()).replace("@@@TASK@@@", $("#task").text()), function(json) {
+          if(json.correct !== undefined) {
+            log("Correct: ", json.correct, "code");
+          }
+          if(json.comment !== undefined) {
+            log("Comment: ", json.comment, "code");
+            speak(json.comment);
+          } 
+        });
+      }  
+    });
 };
 
 recognition.onerror = function(event) {
   log("Error: ", event.error, "error");
 }
 
-function use_ai(inputText, prefix="") {
+function use_ai(inputText, prefix="", callback) {
   log("AI Request: ", prefix+" \n"+inputText, "debug");
   $.ajax({
     url: './api.php',
@@ -95,21 +113,7 @@ function use_ai(inputText, prefix="") {
         log("JSON Error: ", e, "error");
         return;
       }
-      if(json.query !== undefined) {
-        if(json.query == null) {
-          log("Query: ", "null", "error");
-          return;
-        }
-        log("Query: ", json.query, "code");
-        use_ai(json.query, PREFIX_PROMPT_CORRECT.replace("@@@SCHEMA@@@", $("#schema").text()).replace("@@@TASK@@@", $("#task").text()));
-      }
-      if(json.correct !== undefined) {
-        log("Correct: ", json.correct, "code");
-      }
-      if(json.comment !== undefined) {
-        log("Comment: ", json.comment, "code");
-        speak(json.comment);
-      }      
+      callback(json);     
     },
     error: function(xhr, status, error) {
         log("AI Error: ", error, "error");

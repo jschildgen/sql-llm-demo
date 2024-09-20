@@ -1,7 +1,12 @@
 <?php
 require_once('config.php');
 
-$postData = json_decode(file_get_contents('php://input'), true);
+$json = file_get_contents('php://input');
+$lastBracePos = strrpos($json, '}');
+if ($lastBracePos !== false) {
+    $json = substr($json, 0, $lastBracePos + 1); // +1, um das '}' einzuschließen
+}
+$postData = json_decode($json, true);
 $userMessage = $postData['q'];
 
 $apiUrl = 'https://api.openai.com/v1/chat/completions';
@@ -29,7 +34,8 @@ $context  = stream_context_create($options);
 $result = file_get_contents($apiUrl, false, $context);
 
 if ($result === FALSE) {
-    echo json_encode(['error' => 'OpenAI API Error']);
+  $error = error_get_last();
+  echo json_encode(['error' => 'OpenAI API Error', 'details' => $error]);
 } else {
     echo $result;
 }

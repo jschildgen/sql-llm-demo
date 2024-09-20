@@ -1,5 +1,8 @@
 DEBUG = true;
 
+PHPMYADMIN_URL = "http://localhost/phpMyAdmin";
+API_URL = "http://localhost/t63/crud-invaders/api.php";
+
 PREFIX = "The MySQL database schema is the following: @@@SCHEMA@@@. Answer with a single JSON object with one field: query:... Nothing else! In this query field, write the SQL query for the following: ";
 
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
@@ -10,15 +13,11 @@ const recognition = new SpeechRecognition();
 recording = false;
 recorded_text = [];
 
-recognition.continuous = true;
-recognition.lang = 'en-US';
-recognition.interimResults = false;
-recognition.maxAlternatives = 1;
-
 $(document).ready(function() {
   let tables = "";
 
   $("#pma_navigation").append('<button class="btn btn-danger button" style="border-radius:50%; font-size:110px; z-index:99999; position:fixed; bottom:10px; left:10px; width:160px; height:160px; cursor:pointer;" id="voicebtn">🎤</button>');
+  $("#pma_navigation").append('<select id="voice_language" style="position:fixed; bottom:10px; left:160px; z-index:99999;"><option value="en-US">en-US</option><option value="de-DE">de-DE</option></select>');
 
   function log(msg, data="", level="log", reset_time=false) {
     if (!DEBUG && level=="debug") return;
@@ -36,13 +35,17 @@ $(document).ready(function() {
     }
     $('#log').empty();
     recording = true;
+    recognition.continuous = true;
+    recognition.lang = $('#voice_language').val();
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
     recognition.start();
     log("Listening...", "", "log", true);
     $('#voicebtn').text('◾');
 
     let dbname = $("input[name=db]").val();
 
-    $.get("http://localhost/phpMyAdmin/index.php?route=/database/data-dictionary&db="+dbname, 
+    $.get(PHPMYADMIN_URL+"/index.php?route=/database/data-dictionary&db="+dbname, 
       function(data) { 
         tables = get_tables(data);
       });
@@ -57,6 +60,10 @@ $(document).ready(function() {
   
   recognition.onend = function() {
     transcript = recorded_text.join(" ");
+    if(transcript.trim() == "") {
+      log("No transcript", "", "error");
+      return;
+    }
     log("Transcript: ", transcript);
     Functions.setQuery("-- "+transcript+"\n\n");
     recorded_text = [];
@@ -74,7 +81,7 @@ $(document).ready(function() {
   function use_ai(inputText, prefix="", callback) {
     log("AI Request: ", prefix+" \n"+inputText, "debug");
     $.ajax({
-      url: 'http://localhost/t63/crud-invaders/api.php',
+      url: API_URL,
       type: 'POST',
       headers: {
           'Content-Type': 'application/json'
