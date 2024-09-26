@@ -18,7 +18,7 @@ $data = [
             'content' => $userMessage
         ]
     ],
-    'max_tokens' => 150
+    'max_tokens' => 1500
 ];
 
 $options = [

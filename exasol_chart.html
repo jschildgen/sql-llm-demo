@@ -5,11 +5,19 @@
   </head>
 
   <body>
-    <p id="all_tables"></p>
+    <textarea id="all_tables" style="width:100%; height:5cm"></textarea>
     <hr>
-    <button id="query">Query</button>
-    <div id="chart"></div>
-
+    <form id="query_form" action="#">
+      <input type="text" id="question" style="width:100%" value="Anzahl Parkplätze je Kategorie"><br>
+      <input type="submit" id="query_button" value="Query"><br>
+    </form>
+    <pre style="width:100%"><code id="query"></code></pre><br>
+    
+    <div id="chart" style="width: 100%; height: 300px;"></div>
+    
+    <script src="js/highcharts.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/core.js"></script>
     <script src="js/exasol_chart.js"></script>
   </body>
 </html>
