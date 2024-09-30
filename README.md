@@ -1,4 +1,4 @@
-# crud-invaders
+# sql-llm-demo
 
 ## General
 - Copy config.example.php to config.php
