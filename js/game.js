@@ -191,7 +191,7 @@ function explode(element) {
 
 function start_level(level) {
   current_level = level;
-  $('#btn-start').hide();
+  $('#middlediv').hide();
   $('.star-wars').hide();
   document.getElementById("text-level-"+level).style.display = "flex";
   if(level > 1) { // move text down
