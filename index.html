@@ -1,18 +1,155 @@
-<html>
-<head>
-    <title>CRUD Invaders</title>
-    <meta charset="UTF-8">
-</head>
-<body>
-  <div>
-    <p>Schema: <code contenteditable id="schema">space(id, name, size, color)</code></p>
-    <p>Task: <code contenteditable id="task">Delete the green ships</code></p>
-    <button id="record">Record</button>
-  </div>
-  <table id="log"></table>
-  <script src="js/jquery-3.7.1.min.js"></script>
-  <script src="https://code.responsivevoice.org/responsivevoice.js?key=I35qTGLM"></script>
-  <script src="js/core.js"></script>
-  <script src="js/game.js"></script>
-</body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>SQL Invaders</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/materialdesignicons.min.css" rel="stylesheet" />
+        <link href="css/game.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+            <div class="container px-4 px-lg-5">
+             
+                <img src="assets/oth.png" id="game-logo" alt="Game Logo" data-bs-toggle="modal" data-bs-target="#gameInfoModal">
+                <input id="query" class="form-control" placeholder="SQL Query" style="width: 50em; display: none;">
+                <button id="record" class="btn btn-dark">🔴 Record SQL Query</button>
+                <a class="navbar-brand" style="margin-left: 1vw;"><code id="schema">space(id, name, color)</code></a>
+                
+            </div>
+        </nav>
+
+        <div class="modal fade" id="gameInfoModal" tabindex="-1" aria-labelledby="gameInfoModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="gameInfoModalLabel">About SQL Invaders</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p><strong>SQL Invaders</strong> is an exciting space-themed game that allows players to control the action using SQL commands and their voice.</p>
+                <p>The game can be played on PC browsers or on the Meta Quest 3 VR headset using the Wolvic browser.</p>
+                <ul>
+                  <li><strong>Developer:</strong> Johannes Schildgen</li>
+                  <li><strong>Release Date:</strong> 2024</li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Page Content-->       
+        <section> 
+            <div style="position: absolute; width: 100%; display: flex; justify-content: center; margin-left: -5vw;">
+                <div id="gameobjects">
+                    <span id="alien1" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-teal);"></span>
+                    <span id="alien1f" class="gameobject mdi mdi-space-invaders fancycolor"></span>
+                    <span id="alien2" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-cyan);"></span>
+                    <span id="alien2f" class="gameobject mdi mdi-space-invaders fancycolor"></span>
+                    <span id="satellite" class="gameobject mdi mdi-space-station fancycolor"></span>
+                    <span id="alien3" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-teal);"></span>
+                    <span id="rocket1" class="gameobject mdi mdi-rocket" style="color: var(--bs-gray)"></span>
+                    <span id="rocket2" class="gameobject mdi mdi-rocket" style="color: var(--bs-red)"></span>
+                    <span id="alien4" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-red);"></span>
+                    <span id="alien4f" class="gameobject mdi mdi-space-invaders fancycolor"></span>
+                    <span id="alien5" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-gray);"></span>
+                    <span id="alien6" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-cyan);"></span>
+                    <span id="alien7" class="gameobject mdi mdi-space-invaders" style="color: var(--bs-red);"></span>
+                    <span id="rocket3" class="gameobject mdi mdi-rocket" style="color: var(--bs-yellow)"></span>
+                </div>
+            </div>
+            <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-lg-6">
+                </div>
+            </div>
+            </div>
+
+            <div id="text-level-1" class="star-wars">            
+              <div class="crawl">
+                <div class="title">
+                  <p>SQL Invaders</p>
+                  <h1>Level 1</h1>
+                </div>
+                <p>Welcome to space! We are surrounded by rockets, satellites, and aliens. Perhaps you know the game Space Invaders. It's not like that here. Everyone in space is peaceful.<br>Use your voice to show you everything in space.</p>
+              </div>
+            </div>
+
+
+            <div id="text-level-2" class="star-wars">            
+                <div class="crawl">
+                  <div class="title">
+                    <h1>Level 2</h1>
+                  </div>
+                  <p>Do you see the gray rocket?<br>Let's paint it red!</p>
+                </div>
+              </div>
+
+              <div id="text-level-3" class="star-wars">            
+                <div class="crawl">
+                  <div class="title">
+                    <h1>Level 3</h1>
+                  </div>
+                  <p>I think we need another rocket.<br>Please insert a yellow one!</p>
+                </div>
+              </div>
+
+              <div id="text-level-4" class="star-wars">            
+                <div class="crawl">
+                  <div class="title">
+                    <h1>Level 4</h1>
+                  </div>
+                  <p>Oh no, I was wrong. It turns out that the red aliens are evil!<br>Remove them!</p>
+                </div>
+              </div>
+
+
+              <div id="text-level-5" class="star-wars">            
+                <div class="crawl">
+                  <div class="title">
+                    <h1>Level 5</h1>
+                  </div>
+                  <p>You saved the galaxy! Some of our aliens are so pleased that they have turned the same color as the satellite. Can you find these aliens?</p>
+                </div>
+              </div>
+
+
+              <div id="text-level-6" class="star-wars">            
+                <div class="crawl">
+                    <div class="title">
+                      <h1>Game over</h1>
+                    </div>
+                    <p>You won!</p>
+                  </div>
+              </div>
+
+              <div id="middlediv">
+                <div class="start-container">
+                  <h1 id="game-title">SQL Invaders</h1>
+                  <p>&nbsp;</p>
+                  <button id="btn-start" class="game-button" onclick="start_level(1)">Start Game</button>
+                  
+                </div>
+              </div>
+
+
+            <div id="toast" class="toast-message"></div>
+        </section>
+
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <script src="js/jquery-3.7.1.min.js"></script>
+        <script src="https://code.responsivevoice.org/responsivevoice.js?key=I35qTGLM"></script>
+        <script src="js/core.js"></script>
+        <script src="js/game.js"></script>
+    </body>
 </html>

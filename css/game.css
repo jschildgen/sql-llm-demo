@@ -1,0 +1,314 @@
+body {
+  overflow: hidden;   /* Prevent scrolling */
+}
+
+/* Toast Popup for SQL Queries at the bottom */
+.toast-message {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3vw;
+  font-weight: bold;
+  color: white;
+  padding: 15px;
+  opacity: 0;
+  animation: slideInFadeOut 5s forwards;
+  text-align: center;
+}
+
+@keyframes slideInFadeOut {
+  0% {
+      bottom: -100px;
+      opacity: 0;
+  }
+  20% {
+      bottom: 50px;
+      opacity: 1;
+  }
+  80% {
+      bottom: 50px;
+      opacity: 1;
+  }
+  100% {
+      bottom: 100px;
+      opacity: 0;
+  }
+}
+
+/* Explosion Animation */
+.explosion-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 100px auto;
+}
+
+.explosion {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--bs-orange);
+  border-radius: 50%;
+  opacity: 0;
+  animation: explode 1s forwards;
+}
+
+@keyframes explode {
+  0% {
+      transform: scale(1);
+      opacity: 1;
+  }
+  50% {
+      transform: scale(3);
+      opacity: 1;
+  }
+  100% {
+      transform: scale(5);
+      opacity: 0;
+  }
+}
+
+/* Star Wars Text Animation */
+.fade {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  top: -25px;
+  background-image: linear-gradient(0deg, transparent, black 75%);
+  z-index: 1;
+}
+
+.star-wars {
+  display: none;
+  justify-content: center;
+  position: relative;
+  height: 800px;
+  color: var(--bs-yellow);
+  font-family: 'Pathway Gothic One', sans-serif;
+  font-size: 4.5vw;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 150%;
+  perspective: 400px;
+  text-align: justify;
+}
+
+.crawl {
+  position: relative;
+  bottom: 9999px;
+  transform-origin: 50% 100%;
+  animation: crawl 15s linear forwards;
+}
+
+.crawl > .title {
+  font-size: 100%;
+  text-align: center;
+}
+
+.crawl > .title h1 {
+  margin: 0 0 100px;
+  text-transform: uppercase;
+}
+
+@keyframes crawl {
+  0% {
+    bottom: -100vh;
+    transform: rotateX(20deg)  translateZ(0);
+  }
+  100% { 
+    bottom: 40vh;
+    transform: rotateX(25deg) translateZ(-30vh);
+  }
+}
+
+/* Move game objects from left to right and back */
+@keyframes moveLeftRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10vw);
+  }
+  100% {
+    transform: translateX(0); /* Move back to original position */
+  }
+}
+
+/* Game Objects (Aliens, Rockets, etc.) */
+.gameobject {
+  font-size: 7vw; 
+  display: none;  /* inline-block */
+}
+
+#gameobjects {
+  position: relative;
+  animation: moveLeftRight 5s infinite ease-in-out;
+  display: inline-block;
+}
+
+.fancycolor {
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  color: transparent;
+  background-clip: text;
+}
+
+.rotate-clockwise {
+  animation: rotate 2s linear infinite; /* 2 Sekunden pro Umdrehung, linear und unendlich */
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.shake {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.5);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.flicker {
+  animation: flicker 0.15s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 0.6;
+  }
+}
+
+#middlediv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+
+/* Startcontainer mit einem soliden Stil */
+.start-container {
+  text-align: center;
+  padding: 2em;
+  border-radius: 20px;
+  max-width: 600px;
+}
+
+/* Der Titel des Spiels */
+#game-title {
+  font-size: 8vh;
+  color: var(--bs-yellow); /* Helle Farbe für den Titel */
+  font-family: 'Orbitron', sans-serif; /* Sci-Fi-Schriftart */
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); /* Leuchtender Effekt */
+}
+
+/* Der Start-Button */
+.game-button {
+  font-size: 3vh;
+  background-color: var(--bs-yellow); /* Heller gelber Button */
+  color: black;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover-Effekt auf dem Button */
+.game-button:hover {
+  background-color: var(--bs-yellow); /* Heller beim Hover */
+  transform: scale(1.1); /* Vergrößerung beim Hover */
+}
+
+/* Das Logo unter dem Button */
+#game-logo {
+  width: 10vw;
+  cursor: pointer;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)); /* Leichte Leuchteffekte */
+}
+
+.modal-content {
+  border-radius: 15px; /* Runde Ecken */
+  background: linear-gradient(135deg, #1b1b1b, #333); /* Farbverlauf */
+  border: 2px solid var(--bs-yellow); /* Rahmenfarbe */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Schatten */
+}
+
+.modal-header {
+  background-color: #262626;
+  color: var(--bs-yellow);
+  border-bottom: 1px solid var(--bs-yellow); /* Untere Grenze */
+}
+
+.modal-body {
+  background-color: #1b1b1b;
+  color: #f0f0f0;
+  font-size: 1.1rem; /* Größere Schrift */
+}
+
+.modal-footer {
+  background-color: #262626;
+  border-top: 1px solid var(--bs-yellow); /* Obere Grenze */
+}
+
+/* Zentrierter Text */
+.modal-title {
+  text-align: center;
+  font-weight: bold; /* Fettdruck */
+}
+
+/* Fancy Button Style */
+.btn-secondary {
+  background-color: var(--bs-yellow);
+  color: #1b1b1b;
+  border: none; /* Keine Grenze */
+  border-radius: 20px; /* Runde Ecken */
+  padding: 10px 20px; /* Polsterung */
+  transition: background-color 0.3s ease; /* Übergangseffekt */
+}
+
+.btn-secondary:hover {
+  background-color: var(--bs-yellow); /* Farbänderung bei Hover */
+}

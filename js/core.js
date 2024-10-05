@@ -1,8 +1,4 @@
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList;
-var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-
-var API_URL = "http://localhost/t63/crud-invaders/api.php";
+var API_URL = "./api.php";
 
 function default_log(msg, data="", level="log", reset_time=false) {
   if (!DEBUG && level=="debug") return;
@@ -11,6 +7,9 @@ function default_log(msg, data="", level="log", reset_time=false) {
 }
 
 function speech_recognition(lang="en-US", log=default_log) {
+  var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+  var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList;
+  var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
   const recognition = new SpeechRecognition();
   recognition.continuous = true;
   recognition.lang = lang;
@@ -28,7 +27,7 @@ function speech_recognition(lang="en-US", log=default_log) {
   
   recognition.onerror = function(event) {
     log("Error: ", event.error, "error");
-  }
+  };
 
   return recognition;
 }
